@@ -70,7 +70,9 @@ the 4th byte in the stream.
 
 ##### etag
 
-Enable or disable etag generation, defaults to true.
+Enable or disable etag generation.
+
+Defaults to `true`, unless the `transform` option is set.
 
 ##### extensions
 
@@ -87,8 +89,10 @@ in preferred order.
 
 ##### lastModified
 
-Enable or disable `Last-Modified` header, defaults to true. Uses the file
-system's last modified value.
+Enable or disable `Last-Modified` header. Uses the file system's last modified
+value.
+
+Defaults to `true`, unless the `transform` option is set.
 
 ##### maxAge
 
@@ -104,6 +108,30 @@ Serve files relative to `path`.
 
 Byte offset at which the stream starts, defaults to 0. The start is inclusive,
 meaning `start: 2` will include the 3rd byte in the stream.
+
+##### transform
+
+A function that consumes the file stream and produces a new (transformed)
+stream:
+
+```javascript
+function(stream) {return stream.pipe(replaceStream('tobi', 'peter'))}
+```
+ 
+Multiple transformations are possible: 
+
+```javascript
+function(stream) {
+  return stream
+  .pipe(replaceStream('tobi', 'peter'))
+  .pipe(replaceStream('peter', 'hans'))
+  .pipe(...)
+}
+```
+
+When a transform is specified, the `lastModified` and `etag` options default to
+`false`, but can be overridden when a transform on the file's stream is expected
+to always generate the same result. 
 
 #### Events
 

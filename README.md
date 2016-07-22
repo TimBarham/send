@@ -1,4 +1,4 @@
-# send
+# send-transform
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
@@ -7,23 +7,27 @@
 [![Test Coverage][coveralls-image]][coveralls-url]
 [![Gratipay][gratipay-image]][gratipay-url]
 
-Send is a library for streaming files from the file system as a http response
-supporting partial responses (Ranges), conditional-GET negotiation, high test
-coverage, and granular events which may be leveraged to take appropriate actions
-in your application or framework.
+Send-transform is a modified version of the send library for streaming files from
+the file system as a http response supporting partial responses (Ranges),
+conditional-GET negotiation, high test coverage, and granular events which may be
+leveraged to take appropriate actions in your application or framework.
+
+This modified version of send supports specifying a transform function that takes
+the file stream as input, and produces a new (transformed) stream as ouput. See
+below for more information.
 
 Looking to serve up entire folders mapped to URLs? Try [serve-static](https://www.npmjs.org/package/serve-static).
 
 ## Installation
 
 ```bash
-$ npm install send
+$ npm install send-transform
 ```
 
 ## API
 
 ```js
-var send = require('send')
+var send = require('send-transform')
 ```
 
 ### send(req, path, [options])
@@ -161,7 +165,7 @@ $ npm test
 
 ```js
 var http = require('http');
-var send = require('send');
+var send = require('send-transform');
 
 var app = http.createServer(function(req, res){
   send(req, req.url).pipe(res);
@@ -172,7 +176,7 @@ Serving from a root directory with custom error-handling:
 
 ```js
 var http = require('http');
-var send = require('send');
+var send = require('send-transform');
 var url = require('url');
 
 var app = http.createServer(function(req, res){

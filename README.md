@@ -1,29 +1,26 @@
-# send
+# send-transform
 
-[![NPM Version][npm-image]][npm-url]
-[![NPM Downloads][downloads-image]][downloads-url]
-[![Linux Build][travis-image]][travis-url]
-[![Windows Build][appveyor-image]][appveyor-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
-[![Gratipay][gratipay-image]][gratipay-url]
+Send-transform is a modified version of the [send](https://www.npmjs.org/package/send)
+library for streaming files from the file system as a http response supporting partial
+responses (Ranges), conditional-GET negotiation, high test coverage, and granular
+events which may be leveraged to take appropriate actions in your application or framework.
 
-Send is a library for streaming files from the file system as a http response
-supporting partial responses (Ranges), conditional-GET negotiation, high test
-coverage, and granular events which may be leveraged to take appropriate actions
-in your application or framework.
+This modified version of send supports specifying a transform function that takes
+the file stream as input, and produces a new (transformed) stream as ouput. See
+below for more information.
 
 Looking to serve up entire folders mapped to URLs? Try [serve-static](https://www.npmjs.org/package/serve-static).
 
 ## Installation
 
 ```bash
-$ npm install send
+$ npm install send-transform
 ```
 
 ## API
 
 ```js
-var send = require('send')
+var send = require('send-transform')
 ```
 
 ### send(req, path, [options])
@@ -193,7 +190,7 @@ $ npm test
 ```js
 var http = require('http')
 var parseUrl = require('parseurl')
-var send = require('send')
+var send = require('send-transform')
 
 var app = http.createServer(function onRequest (req, res) {
   send(req, parseUrl(req).pathname).pipe(res)
@@ -205,7 +202,7 @@ var app = http.createServer(function onRequest (req, res) {
 ```js
 var http = require('http')
 var parseUrl = require('parseurl')
-var send = require('send')
+var send = require('send-transform')
 
 // Default unknown types to text/plain
 send.mime.default_type = 'text/plain'
@@ -260,16 +257,3 @@ var app = http.createServer(function onRequest (req, res) {
 ## License 
 
 [MIT](LICENSE)
-
-[npm-image]: https://img.shields.io/npm/v/send.svg
-[npm-url]: https://npmjs.org/package/send
-[travis-image]: https://img.shields.io/travis/pillarjs/send/master.svg?label=linux
-[travis-url]: https://travis-ci.org/pillarjs/send
-[appveyor-image]: https://img.shields.io/appveyor/ci/dougwilson/send/master.svg?label=windows
-[appveyor-url]: https://ci.appveyor.com/project/dougwilson/send
-[coveralls-image]: https://img.shields.io/coveralls/pillarjs/send/master.svg
-[coveralls-url]: https://coveralls.io/r/pillarjs/send?branch=master
-[downloads-image]: https://img.shields.io/npm/dm/send.svg
-[downloads-url]: https://npmjs.org/package/send
-[gratipay-image]: https://img.shields.io/gratipay/dougwilson.svg
-[gratipay-url]: https://www.gratipay.com/dougwilson/
